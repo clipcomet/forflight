@@ -1,0 +1,30 @@
+<div class="weather-container">
+    <app-nav-buttons></app-nav-buttons>
+  
+    <div class="search-bar">
+      <input [(ngModel)]="icaoCode" placeholder="Enter ICAO code" class="input-field" />
+      <button (click)="getWeather()" class="search-button">Get Full Weather</button>
+    </div>
+  
+    <div *ngIf="isLoading" class="spinner"></div>
+  
+    <div *ngIf="weatherData && !isLoading" class="weather-data">
+      <h2>Full Weather Report</h2>
+  
+      <div class="section">
+        <h3 (click)="toggleSection('metar')" class="section-header">
+          METAR
+          <span class="toggle-icon">{{ isSectionOpen('metar') ? '▼' : '▶' }}</span>
+        </h3>
+        <app-metar *ngIf="isSectionOpen('metar')" [metarData]="weatherData.conditions" [standalone]="false"></app-metar>
+      </div>
+  
+      <div class="section">
+        <h3 (click)="toggleSection('taf')" class="section-header">
+          TAF
+          <span class="toggle-icon">{{ isSectionOpen('taf') ? '▼' : '▶' }}</span>
+        </h3>
+        <app-taf *ngIf="isSectionOpen('taf')" [tafData]="weatherData.forecast" [standalone]="false"></app-taf>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,29 @@
+<app-nav-buttons></app-nav-buttons>
+<div class="user-activity-container">
+    <h2>User Activity</h2>
+  
+    <div *ngIf="isLoading" class="spinner"></div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <table *ngIf="!isLoading && !errorMessage && activities.length > 0" class="activity-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Activity</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let activity of activities">
+          <td>{{ activity.UserId }}</td>
+          <td>{{ activity.Activity }}</td>
+          <td>{{ activity.Timestamp | date:'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <p *ngIf="!isLoading && !errorMessage && activities.length === 0">No activity data available.</p>
+  </div>

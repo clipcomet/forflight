@@ -1,0 +1,48 @@
+<div class="weather-container">
+    <ng-container *ngIf="standalone">
+      <app-nav-buttons></app-nav-buttons>
+      <div class="search-bar">
+        <input [(ngModel)]="icaoCode" placeholder="Enter ICAO code" class="input-field" />
+        <button (click)="getTaf()" class="search-button">Get TAF</button>
+      </div>
+      <div *ngIf="isLoading" class="spinner"></div>
+    </ng-container>
+  
+    <div *ngIf="tafData" class="weather-data">
+      <div class="taf-header">
+        <h2>TAF for <span style="text-transform: uppercase;">{{ tafData.ident }}</span></h2>
+        <span class="time-ago">{{ getTimeAgo(tafData.dateIssued) }}</span>
+      </div>
+  
+      <div class="taf-raw">{{ tafData.text }}</div>
+  
+      <div class="forecast-periods">
+        <h3>Forecast Periods</h3>
+        <div *ngFor="let condition of tafData.conditions; let i = index" class="forecast-period">
+          <h4>Period {{ i + 1 }}</h4>
+          <div class="weather-grid">
+            <div class="detail-item">
+              <span class="detail-label">From</span>
+              <span class="detail-value">{{ formatDate(condition.period?.dateStart) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">To</span>
+              <span class="detail-value">{{ formatDate(condition.period?.dateEnd) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Winds</span>
+              <span class="detail-value">{{ formatWind(condition.wind) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Visibility</span>
+              <span class="detail-value">{{ condition.visibility?.distanceSm }} SM</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Clouds</span>
+              <span class="detail-value">{{ formatClouds(condition.cloudLayers) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

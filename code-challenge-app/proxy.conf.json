@@ -1,0 +1,17 @@
+{
+  "/api/weather/report": {
+    "target": "https://api.foreflight.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "info",
+    "headers": {
+      "x-foreflight-odense": "true"
+    }
+  },
+  "/local-api/weather/report": {
+    "target": "https://localhost:44357",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}

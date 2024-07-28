@@ -1,0 +1,59 @@
+<div class="weather-container">
+    <ng-container *ngIf="standalone">
+      <app-nav-buttons></app-nav-buttons>
+      <div class="search-bar">
+        <input [(ngModel)]="icaoCode" placeholder="Enter ICAO code" class="input-field" />
+        <button (click)="getMetar()" class="search-button">Get METAR</button>
+      </div>
+      <div *ngIf="isLoading" class="spinner"></div>
+    </ng-container>
+  
+    <div *ngIf="metarData" class="weather-data">
+      <div class="metar-header">
+        <h2>METAR for <span style="text-transform: uppercase;">{{ metarData.ident }}</span></h2>
+        <span class="flight-rules">{{ metarData.flightRules }}</span>
+        <span class="time-ago">{{ getTimeAgo(metarData.dateIssued) }}</span>
+      </div>
+  
+      <div class="metar-raw">{{ metarData.text }}</div>
+  
+      <div class="weather-grid">
+        <div class="detail-item">
+          <span class="detail-label">Time</span>
+          <span class="detail-value">{{ formatTime(metarData.dateIssued) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Winds</span>
+          <span class="detail-value">{{ formatWind(metarData.wind) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Visibility</span>
+          <span class="detail-value">{{ metarData.visibility.distanceSm }} sm</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Clouds (AGL)</span>
+          <span class="detail-value">{{ formatClouds(metarData.cloudLayers) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Temperature</span>
+          <span class="detail-value">{{ metarData.tempC }}°C ({{ celsiusToFahrenheit(metarData.tempC) }}°F)</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Dewpoint</span>
+          <span class="detail-value">{{ metarData.dewpointC }}°C ({{ celsiusToFahrenheit(metarData.dewpointC) }}°F)</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Altimeter</span>
+          <span class="detail-value">{{ metarData.pressureHg.toFixed(2) }} in Hg</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Humidity</span>
+          <span class="detail-value">{{ calculateHumidity(metarData.tempC, metarData.dewpointC) }}%</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Density Altitude</span>
+          <span class="detail-value">{{ metarData.densityAltitudeFt }} ft</span>
+        </div>
+      </div>
+    </div>
+  </div>

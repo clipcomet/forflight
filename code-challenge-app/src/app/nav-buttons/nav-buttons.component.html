@@ -1,0 +1,8 @@
+<nav class="nav-buttons">
+    <a *ngFor="let button of buttons" 
+       [routerLink]="button.route"
+       routerLinkActive="active"
+       class="nav-button">
+      {{ button.label }}
+    </a>
+  </nav>
